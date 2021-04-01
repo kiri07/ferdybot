@@ -3,6 +3,7 @@ const Discord = require('discord.js')
 const { prefix } = require('./utils/config')
 const { doCmd, interpret } = require('./ai/ai')
 require('dotenv').config()
+const scheduledMessage = require('./moderation/quindiciMin')
 
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
@@ -22,7 +23,10 @@ commandFolders.forEach(folder => {
 
 client.login(process.env.BOT_TOKEN)
 
-client.once('ready', () => console.log('bot is ready!'))
+client.once('ready', () => {
+	console.log('bot is ready!');
+	scheduledMessage.start();
+	})
 
 client.on('message', msg => {
     if (msg.author.bot) return
